@@ -1,7 +1,7 @@
 {
     "version": "0.1.0",
-    "summary": "Build an App in Elm with JWT Authentication and an API",
-    "repository": "https://github.com/kmaida/elm-with-jwt-api.git",
+    "summary": "commenting package for elm",
+    "repository": "https://github.com/jonathanfishbein1/elm-comment.git",
     "license": "MIT",
     "source-directories": [
         "src",

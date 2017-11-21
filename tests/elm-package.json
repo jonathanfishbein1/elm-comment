@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "summary": "Test Suites",
-    "repository": "https://github.com/kmaida/elm-with-jwt-api.git",
+    "repository": "https://github.com/jonathanfishbein1/elm-comment.git",
     "license": "MIT",
     "source-directories": [
         "..\\src",
