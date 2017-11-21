@@ -9,6 +9,7 @@ import CommentModel
         , commentModelInit
         , commentZipperInit
         , config
+        , destructureCommentId
         )
 import CommentUpdate exposing (commentUpdate)
 import Expect
@@ -56,7 +57,7 @@ commentTests =
 
                             findId =
                                 postTestMaybeZipper
-                                    |> Maybe.andThen (goTo (\elem -> elem.commentId == Uuid.toString newUuid))
+                                    |> Maybe.andThen (goTo (\elem -> destructureCommentId elem.commentId == Uuid.toString newUuid))
 
                             foundId =
                                 case findId of

@@ -1,6 +1,7 @@
 module CommentModel
     exposing
         ( CommentId
+        , CommentIdModel(CommentIdModel)
         , CommentModel
         , CommentMsg(..)
         , UserCommentModel
@@ -8,6 +9,7 @@ module CommentModel
         , commentModelInit
         , commentZipperInit
         , config
+        , destructureCommentId
         )
 
 import AutoExpand
@@ -17,7 +19,7 @@ import MultiwayTreeZipper exposing (Zipper)
 
 commentModelInit : CommentModel
 commentModelInit =
-    CommentModel "" userCommentModelInit "" False "" (AutoExpand.initState <| config False "")
+    CommentModel (CommentIdModel "") userCommentModelInit "" False "" (AutoExpand.initState <| config False "")
 
 
 userCommentModelInit : UserCommentModel
@@ -70,8 +72,16 @@ type alias UserCommentModel =
     }
 
 
+type alias CommentId =
+    String
+
+
+type CommentIdModel
+    = CommentIdModel CommentId
+
+
 type alias CommentModel =
-    { commentId : CommentId
+    { commentId : CommentIdModel
     , user : UserCommentModel
     , message : String
     , showReplyInput : Bool
@@ -80,5 +90,6 @@ type alias CommentModel =
     }
 
 
-type alias CommentId =
-    String
+destructureCommentId : CommentIdModel -> CommentId
+destructureCommentId (CommentIdModel commentId) =
+    commentId
