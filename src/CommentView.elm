@@ -4,11 +4,15 @@ import AutoExpand
 import CommentModel
     exposing
         ( CommentId
+        , CommentIdModel(CommentIdModel)
         , CommentModel
         , CommentMsg(ClickReplyButton, CommentRouting, GenerateCommentId)
         , UserCommentModel
+        , UserIdModel(UserIdModel)
         , config
+        , destructureCommentIdModel
         )
+import CommentStyles exposing (Class(..))
 import CommentUpdate exposing (getParentComment)
 import Element
     exposing
@@ -40,11 +44,11 @@ import MultiwayTree
         , datum
         )
 import MultiwayTreeZipper exposing (Zipper)
+import OnClickPreventDefault exposing (onClickPreventDefault)
 import String exposing (isEmpty)
-import Styles.CssStyleElementTypes exposing (Class(..))
 
 
-commentMainView : Bool -> UserModel -> Maybe (Zipper CommentModel) -> Element Class variation CommentMsg
+commentMainView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Element Class variation CommentMsg
 commentMainView isSignedIn currentUser zipper =
     section None [] <|
         column None
@@ -67,8 +71,8 @@ commentMainView isSignedIn currentUser zipper =
             )
 
 
-addCommentView : Bool -> UserModel -> Maybe (Zipper CommentModel) -> CommentId -> Element Class variation CommentMsg
-addCommentView isSignedIn commenter zipper parentCommentId =
+addCommentView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> CommentIdModel -> Element Class variation CommentMsg
+addCommentView isSignedIn commenter zipper (CommentIdModel parentCommentId) =
     let
         parentCommentModel =
             getParentComment zipper parentCommentId
@@ -104,7 +108,7 @@ addCommentView isSignedIn commenter zipper parentCommentId =
         )
 
 
-forestView : Bool -> UserModel -> Maybe (Zipper CommentModel) -> Forest CommentModel -> Element Class variation CommentMsg
+forestView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Forest CommentModel -> Element Class variation CommentMsg
 forestView isSignedIn currentUser zipper forest =
     column None [ moveRight 20 ] (List.map (individualCommentView isSignedIn currentUser zipper) forest)
 
@@ -117,11 +121,11 @@ commentProfileHtml commenter =
     in
     link ("profile/" ++ commentUserId) <|
         el Paragraph
-            [ onClickPreventDefault <| (CommentRouting <| Profile commenter.userId) ]
+            [ onClickPreventDefault <| CommentRouting commentUserId ]
             (text commenter.userFullName)
 
 
-individualCommentView : Bool -> UserModel -> Maybe (Zipper CommentModel) -> Tree CommentModel -> Element Class variation CommentMsg
+individualCommentView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Tree CommentModel -> Element Class variation CommentMsg
 individualCommentView isSignedIn currentUser zipper treeCommentModel =
     let
         commentModel =
@@ -132,7 +136,7 @@ individualCommentView isSignedIn currentUser zipper treeCommentModel =
         [ commentProfileHtml commentModel.user
         , paragraph Paragraph [] [ text commentModel.message ]
         , button None
-            [ onClick <| ClickReplyButton commentModel.commentId
+            [ onClick <| ClickReplyButton <| destructureCommentIdModel commentModel.commentId
             , width <| px 50
             ]
             (text "reply")

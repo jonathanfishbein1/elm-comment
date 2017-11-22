@@ -1,4 +1,8 @@
-module CommentUpdate exposing (commentUpdate, getParentComment)
+module CommentUpdate
+    exposing
+        ( commentUpdate
+        , getParentComment
+        )
 
 import AutoExpand
 import CommentModel
@@ -8,7 +12,7 @@ import CommentModel
         , CommentModel
         , CommentMsg(..)
         , config
-        , destructureCommentId
+        , destructureCommentIdModel
         )
 import Maybe exposing (andThen)
 import MultiwayTree
@@ -32,7 +36,7 @@ commentUpdate isSignedIn seed commentMsg zipper =
             let
                 newZipper =
                     zipper
-                        |> andThen (goTo (\elem -> destructureCommentId elem.commentId == parentCommentId))
+                        |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == parentCommentId))
                         |> andThen (updateDatum (\old -> { old | protoMessage = "" }))
                         |> andThen goToRoot
             in
@@ -43,7 +47,7 @@ commentUpdate isSignedIn seed commentMsg zipper =
             let
                 newZipper =
                     zipper
-                        |> andThen (goTo (\elem -> destructureCommentId elem.commentId == commentId))
+                        |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == commentId))
                         |> andThen (updateDatum (\old -> { old | showReplyInput = not old.showReplyInput }))
                         |> andThen goToRoot
             in
@@ -53,7 +57,7 @@ commentUpdate isSignedIn seed commentMsg zipper =
             let
                 newZipper =
                     zipper
-                        |> andThen (goTo (\elem -> destructureCommentId elem.commentId == parentCommentId))
+                        |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == parentCommentId))
                         |> andThen
                             (updateDatum
                                 (\old ->
@@ -80,8 +84,8 @@ commentUpdate isSignedIn seed commentMsg zipper =
                     let
                         newZipper =
                             zipper
-                                |> andThen (goTo (\elem -> destructureCommentId elem.commentId == parentCommentId))
-                                |> andThen (insertChild (MultiwayTree.Tree (CommentModel (CommentIdModel (Uuid.toString newUuid)) commenterUserModel protoMessage.protoMessage False "" (AutoExpand.initState <| config isSignedIn parentCommentId)) []))
+                                |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == parentCommentId))
+                                |> andThen (insertChild (MultiwayTree.Tree (CommentModel (CommentIdModel <| Uuid.toString newUuid) commenterUserModel protoMessage.protoMessage False "" (AutoExpand.initState <| config isSignedIn parentCommentId)) []))
                                 |> andThen goToRoot
                     in
                     newZipper
@@ -90,12 +94,18 @@ commentUpdate isSignedIn seed commentMsg zipper =
                 Nothing ->
                     ( zipper, seed ) ! []
 
+        CommentRouting userId ->
+            ( zipper, seed ) ! []
+
+        CommentLogin ->
+            ( zipper, seed ) ! []
+
 
 getParentComment : Maybe (Zipper CommentModel) -> CommentId -> Maybe CommentModel
 getParentComment zipper parentCommentId =
     let
         parentZipper =
             zipper
-                |> andThen (goTo (\elem -> destructureCommentId elem.commentId == parentCommentId))
+                |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == parentCommentId))
     in
     Maybe.map datum parentZipper

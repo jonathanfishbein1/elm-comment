@@ -3,13 +3,13 @@ module CommentTests exposing (commentTests)
 import AutoExpand
 import CommentModel
     exposing
-        ( CommentMsg(..)
+        ( CommentIdModel(CommentIdModel)
+        , CommentMsg(..)
         , UserCommentModel
         , UserIdModel(UserIdModel)
         , commentModelInit
         , commentZipperInit
         , config
-        , destructureCommentId
         )
 import CommentUpdate exposing (commentUpdate)
 import Expect
@@ -57,7 +57,7 @@ commentTests =
 
                             findId =
                                 postTestMaybeZipper
-                                    |> Maybe.andThen (goTo (\elem -> destructureCommentId elem.commentId == Uuid.toString newUuid))
+                                    |> Maybe.andThen (goTo (\elem -> elem.commentId == (CommentIdModel <| Uuid.toString newUuid)))
 
                             foundId =
                                 case findId of
