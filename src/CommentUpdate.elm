@@ -4,6 +4,12 @@ module CommentUpdate
         , getParentComment
         )
 
+{-| This library is a comments library similar to that found on social media sites.
+
+@docs commentUpdate, getParentComment
+
+-}
+
 import AutoExpand
 import CommentModel
     exposing
@@ -29,6 +35,8 @@ import Random.Pcg exposing (Seed, step)
 import Uuid
 
 
+{-| Update function
+-}
 commentUpdate : Bool -> Seed -> CommentMsg -> Maybe (Zipper CommentModel) -> ( ( Maybe (Zipper CommentModel), Seed ), Cmd CommentMsg )
 commentUpdate isSignedIn seed commentMsg zipper =
     case commentMsg of
@@ -101,6 +109,8 @@ commentUpdate isSignedIn seed commentMsg zipper =
             ( zipper, seed ) ! []
 
 
+{-| Function to get the parent comment
+-}
 getParentComment : Maybe (Zipper CommentModel) -> CommentId -> Maybe CommentModel
 getParentComment zipper parentCommentId =
     let

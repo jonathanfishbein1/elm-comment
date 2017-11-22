@@ -1,4 +1,13 @@
-module CommentView exposing (..)
+module CommentView
+    exposing
+        ( commentMainView
+        )
+
+{-| This library is a comments library similar to that found on social media sites.
+
+@docs commentMainView
+
+-}
 
 import AutoExpand
 import CommentModel
@@ -48,6 +57,8 @@ import OnClickPreventDefault exposing (onClickPreventDefault)
 import String exposing (isEmpty)
 
 
+{-| Main comment view function
+-}
 commentMainView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Element Class variation CommentMsg
 commentMainView isSignedIn currentUser zipper =
     section None [] <|

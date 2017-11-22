@@ -13,6 +13,12 @@ module CommentModel
         , destructureCommentIdModel
         )
 
+{-| This library is a comments library similar to that found on social media sites.
+
+@docs CommentId, CommentIdModel, CommentModel, CommentMsg, UserCommentModel, UserIdModel, destructureCommentIdModel, config, commentInitState, commentModelInit, commentZipperInit
+
+-}
+
 import AutoExpand
 import MultiwayTree exposing (Tree)
 import MultiwayTreeZipper exposing (Zipper)
@@ -30,10 +36,15 @@ commentOrLogin isSignedIn parentCommentId state =
         CommentLogin
 
 
+{-| Initial comment state
+-}
+commentInitState : AutoExpand.State
 commentInitState =
     AutoExpand.initState <| config False ""
 
 
+{-| Initial comment state
+-}
 config : Bool -> CommentId -> AutoExpand.Config CommentMsg
 config isSignedIn parentCommentId =
     AutoExpand.config
@@ -47,11 +58,8 @@ config isSignedIn parentCommentId =
         |> AutoExpand.withPlaceholder "Write a Comment"
 
 
-destructureCommentIdModel : CommentIdModel -> CommentId
-destructureCommentIdModel (CommentIdModel commentId) =
-    commentId
-
-
+{-| Comment Messages
+-}
 type CommentMsg
     = ClickReplyButton CommentId
     | TextInput CommentId { textValue : String, state : AutoExpand.State }
@@ -61,6 +69,18 @@ type CommentMsg
     | CommentLogin
 
 
+type alias UserId =
+    String
+
+
+{-| Union Wrapped UserId
+-}
+type UserIdModel
+    = UserIdModel String
+
+
+{-| UserModel for comments
+-}
 type alias UserCommentModel =
     { userId : UserIdModel
     , userFullName : String
@@ -68,6 +88,20 @@ type alias UserCommentModel =
     }
 
 
+{-| CommentId
+-}
+type alias CommentId =
+    String
+
+
+{-| Union Wrapped CommentId
+-}
+type CommentIdModel
+    = CommentIdModel CommentId
+
+
+{-| CommentModel
+-}
 type alias CommentModel =
     { commentId : CommentIdModel
     , user : UserCommentModel
@@ -78,27 +112,20 @@ type alias CommentModel =
     }
 
 
-type CommentIdModel
-    = CommentIdModel CommentId
-
-
-type alias CommentId =
-    String
-
-
-type alias UserId =
-    String
-
-
-type UserIdModel
-    = UserIdModel String
-
-
 destructureUserId : UserIdModel -> UserId
 destructureUserId (UserIdModel userId) =
     userId
 
 
+{-| destructure a CommentIdModel to CommentId
+-}
+destructureCommentIdModel : CommentIdModel -> CommentId
+destructureCommentIdModel (CommentIdModel commentId) =
+    commentId
+
+
+{-| CommentModel initial value
+-}
 commentModelInit : CommentModel
 commentModelInit =
     CommentModel (CommentIdModel "") userCommentModelInit "" False "" (AutoExpand.initState <| config False "")
@@ -114,6 +141,8 @@ commentTreeInit =
     MultiwayTree.Tree commentModelInit []
 
 
+{-| Zipper initial value
+-}
 commentZipperInit : Maybe (Zipper CommentModel)
 commentZipperInit =
     Just ( commentTreeInit, [] )
