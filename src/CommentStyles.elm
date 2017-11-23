@@ -1,4 +1,4 @@
-module CommentStyles exposing (..)
+module CommentStyles exposing (Class(..))
 
 import Style
     exposing
