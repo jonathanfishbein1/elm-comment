@@ -10,7 +10,8 @@
     "exposed-modules": [
         "CommentModel",
         "CommentUpdate",
-        "CommentView"
+        "CommentView",
+        "CommentStyles"
     ],
     "dependencies": {
         "danyx23/elm-uuid": "2.0.2 <= v < 3.0.0",

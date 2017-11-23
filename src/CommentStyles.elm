@@ -4,6 +4,12 @@ module CommentStyles
         , stylesheet
         )
 
+{-| This library is a comments library similar to that found on social media sites.
+
+@docs Class, stylesheet
+
+-}
+
 import Style
     exposing
         ( Property
@@ -23,6 +29,8 @@ import Style.Font
         )
 
 
+{-| Comments style classes
+-}
 type Class
     = None
     | Paragraph
@@ -33,6 +41,8 @@ typefaceStack =
     typeface [ font "Josefin Sans", font "Calibri", font "Helvetica", font "sans-serif" ]
 
 
+{-| Comments stylesheet
+-}
 stylesheet : String -> StyleSheet Class variation
 stylesheet heroBackgroundImage =
     Style.styleSheet
