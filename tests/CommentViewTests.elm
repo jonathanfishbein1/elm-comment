@@ -8,12 +8,17 @@ import CommentModel
         , commentZipperInit
         )
 import CommentStyles exposing (stylesheet)
-import CommentView exposing (..)
+import CommentView exposing (commentMainView)
 import Element exposing (viewport)
 import Expect
 import Fuzz
     exposing
         ( bool
+        )
+import Internal.CommentView
+    exposing
+        ( addCommentView
+        , commentProfileHtml
         )
 import Test
     exposing
