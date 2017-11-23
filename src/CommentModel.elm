@@ -15,7 +15,20 @@ module CommentModel
 
 {-| This library is a comments library similar to that found on social media sites.
 
-@docs CommentId, CommentIdModel, CommentModel, CommentMsg, UserCommentModel, UserIdModel, destructureCommentIdModel, config, commentInitState, commentModelInit, commentZipperInit
+
+# Types
+
+@docs CommentId, CommentIdModel, CommentModel, CommentMsg, UserCommentModel, UserIdModel, config
+
+
+# Inital values
+
+@docs commentInitState, commentModelInit, commentZipperInit
+
+
+# Helper functions
+
+@docs destructureCommentIdModel
 
 -}
 
@@ -43,7 +56,7 @@ commentInitState =
     AutoExpand.initState <| config False ""
 
 
-{-| Initial comment state
+{-| Comment config: accepts a isSignedIn boolean flag and a parentCommentId
 -}
 config : Bool -> CommentId -> AutoExpand.Config CommentMsg
 config isSignedIn parentCommentId =
