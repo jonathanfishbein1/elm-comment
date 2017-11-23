@@ -8,6 +8,7 @@ module CommentModel
         , UserIdModel(UserIdModel)
         , commentInitState
         , commentModelInit
+        , commentTreeInit
         , commentZipperInit
         , config
         , destructureCommentIdModel
@@ -23,7 +24,7 @@ module CommentModel
 
 # Inital values
 
-@docs commentInitState, commentModelInit, commentZipperInit
+@docs commentInitState, commentModelInit, commentTreeInit, commentZipperInit
 
 
 # Helper functions
@@ -149,6 +150,8 @@ userCommentModelInit =
     UserCommentModel (UserIdModel "") "" ""
 
 
+{-| CommentTree initial value
+-}
 commentTreeInit : Tree CommentModel
 commentTreeInit =
     MultiwayTree.Tree commentModelInit []
