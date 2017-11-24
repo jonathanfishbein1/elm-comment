@@ -8,19 +8,7 @@
     "license": "ISC",
     "description": "Elm comments",
     "dependencies": {
-        "@types/auth0-js": "^8.6.3",
-        "@types/auth0-lock": "^10.16.1",
-        "asset-cache-bust": "^2.2.0",
-        "bower": "^1.8.0",
-        "chokidar-cli": "^1.2.0",
-        "concat": "^1.0.3",
         "elm": "^0.18.0",
-        "elm-analyse": "^0.12.1",
-        "elm-css": "^0.6.0",
-        "elm-live": "^2.6.1",
-        "elm-test": "^0.18.3",
-        "tslint": "^4.2.0",
-        "typescript": "^2.5.3",
-        "uglify-js": "^2.8.10"
+        "elm-test": "^0.18.3"
     }
 }
