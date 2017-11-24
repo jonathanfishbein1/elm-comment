@@ -35,7 +35,11 @@ import Random.Pcg exposing (Seed, step)
 import Uuid
 
 
-{-| Update function
+{-| Update function. A seed is necessary
+
+    ( ( newZipper, newSeed ), newCommentCmd ) =
+        commentUpdate isSignedIn seed commentMsg myAppComments
+
 -}
 commentUpdate : Bool -> Seed -> CommentMsg -> Maybe (Zipper CommentModel) -> ( ( Maybe (Zipper CommentModel), Seed ), Cmd CommentMsg )
 commentUpdate isSignedIn seed commentMsg zipper =
