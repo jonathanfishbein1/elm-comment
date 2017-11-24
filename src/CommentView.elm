@@ -49,7 +49,10 @@ import MultiwayTree
 import MultiwayTreeZipper exposing (Zipper)
 
 
-{-| Main comment view function
+{-| Main comment view function. Use mapAll from style-elements
+
+    Element.mapAll MyCommentMessageWrapper Comment identity (commentMainView isSignedIn userCommentModel myAppComments)
+
 -}
 commentMainView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Element Class variation CommentMsg
 commentMainView isSignedIn currentUser zipper =
