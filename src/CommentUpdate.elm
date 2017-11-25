@@ -17,7 +17,7 @@ import CommentModel
         , CommentIdModel(CommentIdModel)
         , CommentModel
         , CommentMsg(..)
-        , config
+        , commentInitState
         , destructureCommentIdModel
         )
 import Maybe exposing (andThen)
@@ -100,7 +100,7 @@ commentUpdate isSignedIn seed commentMsg zipper =
                         newZipper =
                             zipper
                                 |> andThen (goTo (\elem -> elem.commentId == parentCommentIdModel))
-                                |> andThen (insertChild (MultiwayTree.Tree (CommentModel (CommentIdModel <| Uuid.toString newUuid) commenterUserModel protoMessage.protoMessage False "" (AutoExpand.initState <| config isSignedIn parentCommentId)) []))
+                                |> andThen (insertChild (MultiwayTree.Tree (CommentModel (CommentIdModel <| Uuid.toString newUuid) commenterUserModel protoMessage.protoMessage False "" commentInitState) []))
                                 |> andThen goToRoot
                     in
                     newZipper
