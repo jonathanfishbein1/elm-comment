@@ -17,7 +17,6 @@ import CommentModel
         , CommentMsg(ClickReplyButton, CommentRouting, GenerateCommentId)
         , UserCommentModel
         , UserIdModel(UserIdModel)
-        , config
         , destructureCommentIdModel
         )
 import CommentStyles exposing (Class(..))
