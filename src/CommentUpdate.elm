@@ -44,32 +44,32 @@ import Uuid
 commentUpdate : Bool -> Seed -> CommentMsg -> Maybe (Zipper CommentModel) -> ( ( Maybe (Zipper CommentModel), Seed ), Cmd CommentMsg )
 commentUpdate isSignedIn seed commentMsg zipper =
     case commentMsg of
-        ClearValue parentCommentId ->
+        ClearValue parentCommentIdModel ->
             let
                 newZipper =
                     zipper
-                        |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == parentCommentId))
+                        |> andThen (goTo (\elem -> elem.commentId == parentCommentIdModel))
                         |> andThen (updateDatum (\old -> { old | protoMessage = "" }))
                         |> andThen goToRoot
             in
             newZipper
-                |> commentUpdate isSignedIn seed (ClickReplyButton parentCommentId)
+                |> commentUpdate isSignedIn seed (ClickReplyButton parentCommentIdModel)
 
-        ClickReplyButton commentId ->
+        ClickReplyButton commentIdModel ->
             let
                 newZipper =
                     zipper
-                        |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == commentId))
+                        |> andThen (goTo (\elem -> elem.commentId == commentIdModel))
                         |> andThen (updateDatum (\old -> { old | showReplyInput = not old.showReplyInput }))
                         |> andThen goToRoot
             in
             ( newZipper, seed ) ! []
 
-        TextInput parentCommentId { state, textValue } ->
+        TextInput parentCommentIdModel { state, textValue } ->
             let
                 newZipper =
                     zipper
-                        |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == parentCommentId))
+                        |> andThen (goTo (\elem -> elem.commentId == parentCommentIdModel))
                         |> andThen
                             (updateDatum
                                 (\old ->
@@ -83,25 +83,28 @@ commentUpdate isSignedIn seed commentMsg zipper =
             in
             ( newZipper, seed ) ! []
 
-        GenerateCommentId commenterUserModel parentCommentId ->
+        GenerateCommentId commenterUserModel parentCommentIdModel ->
             let
                 ( newUuid, newSeed ) =
                     step Uuid.uuidGenerator seed
 
                 parentProtoMessage =
-                    getParentComment zipper parentCommentId
+                    getParentComment zipper parentCommentIdModel
+
+                (CommentIdModel parentCommentId) =
+                    parentCommentIdModel
             in
             case parentProtoMessage of
                 Just protoMessage ->
                     let
                         newZipper =
                             zipper
-                                |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == parentCommentId))
+                                |> andThen (goTo (\elem -> elem.commentId == parentCommentIdModel))
                                 |> andThen (insertChild (MultiwayTree.Tree (CommentModel (CommentIdModel <| Uuid.toString newUuid) commenterUserModel protoMessage.protoMessage False "" (AutoExpand.initState <| config isSignedIn parentCommentId)) []))
                                 |> andThen goToRoot
                     in
                     newZipper
-                        |> commentUpdate isSignedIn newSeed (ClearValue parentCommentId)
+                        |> commentUpdate isSignedIn newSeed (ClearValue parentCommentIdModel)
 
                 Nothing ->
                     ( zipper, seed ) ! []
@@ -115,11 +118,11 @@ commentUpdate isSignedIn seed commentMsg zipper =
 
 {-| Function to get the parent comment
 -}
-getParentComment : Maybe (Zipper CommentModel) -> CommentId -> Maybe CommentModel
+getParentComment : Maybe (Zipper CommentModel) -> CommentIdModel -> Maybe CommentModel
 getParentComment zipper parentCommentId =
     let
         parentZipper =
             zipper
-                |> andThen (goTo (\elem -> destructureCommentIdModel elem.commentId == parentCommentId))
+                |> andThen (goTo (\elem -> elem.commentId == parentCommentId))
     in
     Maybe.map datum parentZipper

@@ -38,14 +38,9 @@ import MultiwayTree exposing (Tree)
 import MultiwayTreeZipper exposing (Zipper)
 
 
-commentOrLogin :
-    Bool
-    -> CommentId
-    -> { state : AutoExpand.State, textValue : String }
-    -> CommentMsg
 commentOrLogin isSignedIn parentCommentId state =
     if isSignedIn == True then
-        TextInput parentCommentId state
+        TextInput (CommentIdModel parentCommentId) state
     else
         CommentLogin
 
@@ -75,10 +70,10 @@ config isSignedIn parentCommentId =
 {-| Comment Messages
 -}
 type CommentMsg
-    = ClickReplyButton CommentId
-    | TextInput CommentId { textValue : String, state : AutoExpand.State }
-    | GenerateCommentId UserCommentModel CommentId
-    | ClearValue CommentId
+    = ClickReplyButton CommentIdModel
+    | TextInput CommentIdModel { textValue : String, state : AutoExpand.State }
+    | GenerateCommentId UserCommentModel CommentIdModel
+    | ClearValue CommentIdModel
     | CommentRouting String
     | CommentLogin
 

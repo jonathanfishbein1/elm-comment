@@ -55,10 +55,13 @@ import String exposing (isEmpty)
 
 
 addCommentView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> CommentIdModel -> Element Class variation CommentMsg
-addCommentView isSignedIn commenter zipper (CommentIdModel parentCommentId) =
+addCommentView isSignedIn commenter zipper parentCommentIdModel =
     let
         parentCommentModel =
-            getParentComment zipper parentCommentId
+            getParentComment zipper parentCommentIdModel
+
+        (CommentIdModel parentCommentId) =
+            parentCommentIdModel
     in
     column None
         []
@@ -76,7 +79,7 @@ addCommentView isSignedIn commenter zipper (CommentIdModel parentCommentId) =
                     []
                     [ html <| AutoExpand.view (config isSignedIn parentCommentId) parentCommentModel.autoexpand parentCommentModel.protoMessage
                     , button None
-                        [ onClick <| GenerateCommentId commenterUserModel parentCommentId
+                        [ onClick <| GenerateCommentId commenterUserModel parentCommentIdModel
                         , if isPostCommentButtonDisabled then
                             attribute "disabled" ""
                           else
@@ -119,7 +122,7 @@ individualCommentView isSignedIn currentUser zipper treeCommentModel =
         [ commentProfileHtml commentModel.user
         , paragraph Paragraph [] [ text commentModel.message ]
         , button None
-            [ onClick <| ClickReplyButton <| destructureCommentIdModel commentModel.commentId
+            [ onClick <| ClickReplyButton commentModel.commentId
             , width <| px 50
             ]
             (text "reply")

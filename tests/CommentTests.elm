@@ -69,7 +69,7 @@ commentTests =
                         in
                         foundId
                 in
-                commentUpdate True testSeed (GenerateCommentId (UserCommentModel (UserIdModel "") "" "") "") commentZipperInit
+                commentUpdate True testSeed (GenerateCommentId (UserCommentModel (UserIdModel "") "" "") (CommentIdModel "")) commentZipperInit
                     |> Tuple.first
                     |> Tuple.first
                     |> isErrorResult
@@ -104,7 +104,7 @@ commentTests =
                         in
                         zipper
                 in
-                commentUpdate True testSeed (ClickReplyButton "") newCommentZipper
+                commentUpdate True testSeed (ClickReplyButton (CommentIdModel "")) newCommentZipper
                     |> Tuple.first
                     |> Tuple.first
                     |> isErrorResult
@@ -130,7 +130,7 @@ commentTests =
                         in
                         zipper
                 in
-                commentUpdate True testSeed (TextInput "" { state = AutoExpand.initState <| config True "", textValue = testMessage }) commentZipperInit
+                commentUpdate True testSeed (TextInput (CommentIdModel "") { state = AutoExpand.initState <| config True "", textValue = testMessage }) commentZipperInit
                     |> Tuple.first
                     |> Tuple.first
                     |> isErrorResult
@@ -159,7 +159,7 @@ commentTests =
                         in
                         zipper
                 in
-                commentUpdate True testSeed (ClearValue "") commentZipperInit
+                commentUpdate True testSeed (ClearValue (CommentIdModel "")) commentZipperInit
                     |> Tuple.first
                     |> Tuple.first
                     |> isErrorResult
