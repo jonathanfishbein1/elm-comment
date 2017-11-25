@@ -16,7 +16,6 @@ import CommentModel
         , UserCommentModel
         , UserIdModel(UserIdModel)
         , config
-        , destructureCommentIdModel
         )
 import CommentStyles exposing (Class(..))
 import CommentUpdate exposing (getParentComment)

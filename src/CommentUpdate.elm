@@ -18,7 +18,6 @@ import CommentModel
         , CommentModel
         , CommentMsg(..)
         , commentInitState
-        , destructureCommentIdModel
         )
 import Maybe exposing (andThen)
 import MultiwayTree

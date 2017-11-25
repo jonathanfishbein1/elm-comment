@@ -11,7 +11,6 @@ module CommentModel
         , commentTreeInit
         , commentZipperInit
         , config
-        , destructureCommentIdModel
         )
 
 {-| This library is a comments library similar to that found on social media sites.
@@ -25,11 +24,6 @@ module CommentModel
 # Inital values
 
 @docs commentInitState, commentModelInit, commentTreeInit, commentZipperInit
-
-
-# Helper functions
-
-@docs destructureCommentIdModel
 
 -}
 
@@ -124,13 +118,6 @@ type alias CommentModel =
 destructureUserId : UserIdModel -> UserId
 destructureUserId (UserIdModel userId) =
     userId
-
-
-{-| destructure a CommentIdModel to CommentId
--}
-destructureCommentIdModel : CommentIdModel -> CommentId
-destructureCommentIdModel (CommentIdModel commentId) =
-    commentId
 
 
 {-| CommentModel initial value
