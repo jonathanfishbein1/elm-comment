@@ -11,8 +11,7 @@ module CommentView
 
 import CommentModel
     exposing
-        ( CommentId
-        , CommentIdModel(CommentIdModel)
+        ( CommentIdModel(CommentIdModel)
         , CommentModel
         , CommentMsg(ClickReplyButton, CommentRouting, GenerateCommentId)
         , UserCommentModel

@@ -1,7 +1,6 @@
 module CommentModel
     exposing
-        ( CommentId
-        , CommentIdModel(CommentIdModel)
+        ( CommentIdModel(CommentIdModel)
         , CommentModel
         , CommentMsg(..)
         , UserCommentModel
@@ -18,7 +17,7 @@ module CommentModel
 
 # Types
 
-@docs CommentId, CommentIdModel, CommentModel, CommentMsg, UserCommentModel, UserIdModel, config
+@docs CommentIdModel, CommentModel, CommentMsg, UserCommentModel, UserIdModel, config
 
 
 # Inital values
@@ -28,6 +27,11 @@ module CommentModel
 -}
 
 import AutoExpand
+import Internal.CommentModel
+    exposing
+        ( CommentId
+        , UserId
+        )
 import MultiwayTree exposing (Tree)
 import MultiwayTreeZipper exposing (Zipper)
 
@@ -72,10 +76,6 @@ type CommentMsg
     | CommentLogin
 
 
-type alias UserId =
-    String
-
-
 {-| Union Wrapped UserId
 -}
 type UserIdModel
@@ -89,12 +89,6 @@ type alias UserCommentModel =
     , userFullName : String
     , picture : String
     }
-
-
-{-| CommentId
--}
-type alias CommentId =
-    String
 
 
 {-| Union Wrapped CommentId
