@@ -115,11 +115,6 @@ type alias CommentModel =
     }
 
 
-destructureUserId : UserIdModel -> UserId
-destructureUserId (UserIdModel userId) =
-    userId
-
-
 {-| CommentModel initial value
 -}
 commentModelInit : CommentModel
