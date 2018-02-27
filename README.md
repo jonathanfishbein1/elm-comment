@@ -8,3 +8,6 @@ This library uses [tomjkidd/elm-multiway-tree-zipper](http://package.elm-lang.or
 and 
 
 This library uses [mdgriffith/style-elements](http://package.elm-lang.org/packages/mdgriffith/style-elements/latest)
+
+
+![elm-comments Demo](https://media.giphy.com/media/x46nTkkzogA00JC0Be/giphy.gif)
