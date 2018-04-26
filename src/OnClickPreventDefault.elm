@@ -1,14 +1,14 @@
 module OnClickPreventDefault exposing (onClickPreventDefault)
 
-import Element exposing (Attribute)
-import Element.Events
+import Html
+import Html.Events
     exposing
         ( onWithOptions
         )
 import Json.Decode exposing (succeed)
 
 
-onClickPreventDefault : msg -> Attribute variation msg
+onClickPreventDefault : msg -> Html.Attribute msg
 onClickPreventDefault message =
     onWithOptions "click"
         { stopPropagation = False

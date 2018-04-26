@@ -17,18 +17,15 @@ import CommentModel
         , UserCommentModel
         , UserIdModel(UserIdModel)
         )
-import CommentStyles exposing (Class(..))
 import Element
     exposing
         ( Element
-        , button
         , column
         , el
         , html
         , link
         , paragraph
         , row
-        , section
         , text
         )
 import Internal.CommentView
@@ -51,24 +48,23 @@ import MultiwayTreeZipper exposing (Zipper)
     Element.mapAll MyCommentMessageWrapper Comment identity (commentMainView isSignedIn userCommentModel myAppComments)
 
 -}
-commentMainView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Element Class variation CommentMsg
+commentMainView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Element CommentMsg
 commentMainView isSignedIn currentUser zipper =
-    section None [] <|
-        column None
-            []
-            (case zipper of
-                Just zipper ->
-                    let
-                        treeCommentModel =
-                            Tuple.first zipper
+    column
+        []
+        (case zipper of
+            Just zipper ->
+                let
+                    treeCommentModel =
+                        Tuple.first zipper
 
-                        commentModel =
-                            datum treeCommentModel
-                    in
-                    [ addCommentView isSignedIn currentUser (Just zipper) commentModel.commentId
-                    , column None [] (List.map (individualCommentView isSignedIn currentUser (Just zipper)) (children treeCommentModel))
-                    ]
+                    commentModel =
+                        datum treeCommentModel
+                in
+                [ addCommentView isSignedIn currentUser (Just zipper) commentModel.commentId
+                , column [] (List.map (individualCommentView isSignedIn currentUser (Just zipper)) (children treeCommentModel))
+                ]
 
-                Nothing ->
-                    []
-            )
+            Nothing ->
+                []
+        )

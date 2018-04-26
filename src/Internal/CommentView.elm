@@ -16,30 +16,22 @@ import CommentModel
         , UserIdModel(UserIdModel)
         , config
         )
-import CommentStyles exposing (Class(..))
 import CommentUpdate exposing (getParentComment)
 import Element
     exposing
         ( Element
-        , button
         , column
         , el
         , html
         , link
         , paragraph
         , row
-        , section
         , text
         )
-import Element.Attributes
-    exposing
-        ( attribute
-        , classList
-        , moveRight
-        , px
-        , width
-        )
 import Element.Events exposing (onClick)
+import Element.Input
+import Html
+import Html.Attributes
 import MultiwayTree
     exposing
         ( Forest
@@ -52,7 +44,7 @@ import OnClickPreventDefault exposing (onClickPreventDefault)
 import String exposing (isEmpty)
 
 
-addCommentView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> CommentIdModel -> Element Class variation CommentMsg
+addCommentView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> CommentIdModel -> Element CommentMsg
 addCommentView isSignedIn commenter zipper parentCommentIdModel =
     let
         parentCommentModel =
@@ -61,7 +53,7 @@ addCommentView isSignedIn commenter zipper parentCommentIdModel =
         (CommentIdModel parentCommentId) =
             parentCommentIdModel
     in
-    column None
+    column
         []
         (case parentCommentModel of
             Just parentCommentModel ->
@@ -73,17 +65,18 @@ addCommentView isSignedIn commenter zipper parentCommentIdModel =
                         UserCommentModel commenter.userId commenter.userFullName commenter.picture
                 in
                 [ commentProfileHtml commenterUserModel
-                , row None
+                , row
                     []
                     [ html <| AutoExpand.view (config isSignedIn parentCommentId) parentCommentModel.autoexpand parentCommentModel.protoMessage
-                    , button None
-                        [ onClick <| GenerateCommentId commenterUserModel parentCommentIdModel
-                        , if isPostCommentButtonDisabled then
-                            attribute "disabled" ""
+                    , Element.Input.button
+                        [ if isPostCommentButtonDisabled then
+                            Element.htmlAttribute <| Html.Attributes.attribute "disabled" ""
                           else
-                            classList []
+                            Element.htmlAttribute <| Html.Attributes.classList []
                         ]
-                        (text "post")
+                        { onPress = Just <| GenerateCommentId commenterUserModel parentCommentIdModel
+                        , label = text "post"
+                        }
                     ]
                 ]
 
@@ -92,41 +85,42 @@ addCommentView isSignedIn commenter zipper parentCommentIdModel =
         )
 
 
-forestView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Forest CommentModel -> Element Class variation CommentMsg
+forestView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Forest CommentModel -> Element CommentMsg
 forestView isSignedIn currentUser zipper forest =
-    column None [ moveRight 20 ] (List.map (individualCommentView isSignedIn currentUser zipper) forest)
+    column [ Element.moveRight 20 ] (List.map (individualCommentView isSignedIn currentUser zipper) forest)
 
 
-commentProfileHtml : UserCommentModel -> Element Class variation CommentMsg
+commentProfileHtml : UserCommentModel -> Element CommentMsg
 commentProfileHtml commenter =
     let
         (UserIdModel commentUserId) =
             commenter.userId
     in
-    link ("profile/" ++ commentUserId) <|
-        el Paragraph
-            [ onClickPreventDefault <| CommentRouting commentUserId ]
-            (text commenter.userFullName)
+    link [ Element.htmlAttribute <| onClickPreventDefault <| CommentRouting commentUserId ]
+        { url = "profile/" ++ commentUserId
+        , label = text commenter.userFullName
+        }
 
 
-individualCommentView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Tree CommentModel -> Element Class variation CommentMsg
+individualCommentView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Tree CommentModel -> Element CommentMsg
 individualCommentView isSignedIn currentUser zipper treeCommentModel =
     let
         commentModel =
             datum treeCommentModel
     in
-    column None
+    column
         []
         [ commentProfileHtml commentModel.user
-        , paragraph Paragraph [] [ text commentModel.message ]
-        , button None
-            [ onClick <| ClickReplyButton commentModel.commentId
-            , width <| px 50
+        , paragraph [] [ text commentModel.message ]
+        , Element.Input.button
+            [ Element.width <| Element.px 50
             ]
-            (text "reply")
+            { onPress = Just <| ClickReplyButton commentModel.commentId
+            , label = text "reply"
+            }
         , if commentModel.showReplyInput == True then
-            column None [ moveRight 20 ] [ addCommentView isSignedIn currentUser zipper commentModel.commentId ]
+            column [ Element.moveRight 20 ] [ addCommentView isSignedIn currentUser zipper commentModel.commentId ]
           else
-            column None [] []
-        , column None [] [ forestView isSignedIn currentUser zipper (children treeCommentModel) ]
+            column [] []
+        , column [] [ forestView isSignedIn currentUser zipper (children treeCommentModel) ]
         ]
