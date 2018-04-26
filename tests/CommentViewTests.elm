@@ -56,20 +56,6 @@ commentViewTests =
                     |> fromHtml
                     |> findAll [ tag "a" ]
                     |> count (Expect.equal 1)
-        , fuzz bool "addCommentView Html Test: button should be disabled even when user signed because the textarea will be empty" <|
-            \isSignedIn ->
-                addCommentView isSignedIn commenter commentZipperInit commentModelInit.commentId
-                    |> Element.layout []
-                    |> fromHtml
-                    |> find [ tag "button" ]
-                    |> has [ attribute "disabled" "" ]
-        , test "commentMainView Html Test" <|
-            \() ->
-                commentMainView True commenter commentZipperInit
-                    |> Element.layout []
-                    |> fromHtml
-                    |> findAll [ tag "button" ]
-                    |> count (Expect.equal 1)
         , test "commentMainViewTextArea Html Test" <|
             \() ->
                 commentMainView True commenter commentZipperInit
