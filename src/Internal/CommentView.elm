@@ -27,8 +27,8 @@ import Element
         , row
         , text
         )
-import Element.Input
-import Html.Attributes
+import Framework.Button
+import Framework.Modifiers
 import MultiwayTree
     exposing
         ( Forest
@@ -65,15 +65,14 @@ addCommentView isSignedIn commenter zipper parentCommentIdModel =
                 , row
                     []
                     [ html <| AutoExpand.view (config isSignedIn parentCommentId) parentCommentModel.autoexpand parentCommentModel.protoMessage
-                    , Element.Input.button
-                        [ if isPostCommentButtonDisabled then
-                            Element.htmlAttribute <| Html.Attributes.attribute "disabled" ""
-                          else
-                            Element.htmlAttribute <| Html.Attributes.classList []
-                        ]
-                        { onPress = Just <| GenerateCommentId commenterUserModel parentCommentIdModel
-                        , label = text "post"
-                        }
+                    , Framework.Button.button
+                        (if isPostCommentButtonDisabled then
+                            [ Framework.Modifiers.Disabled ]
+                         else
+                            []
+                        )
+                        (Just <| GenerateCommentId commenterUserModel parentCommentIdModel)
+                        "post"
                     ]
                 ]
 
@@ -109,12 +108,10 @@ individualCommentView isSignedIn currentUser zipper treeCommentModel =
         []
         [ commentProfileHtml commentModel.user
         , paragraph [] [ text commentModel.message ]
-        , Element.Input.button
-            [ Element.width <| Element.px 50
-            ]
-            { onPress = Just <| ClickReplyButton commentModel.commentId
-            , label = text "reply"
-            }
+        , Framework.Button.button
+            []
+            (Just <| ClickReplyButton commentModel.commentId)
+            "reply"
         , if commentModel.showReplyInput == True then
             column [ Element.moveRight 20 ] [ addCommentView isSignedIn currentUser zipper commentModel.commentId ]
           else
