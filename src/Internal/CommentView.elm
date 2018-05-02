@@ -21,16 +21,13 @@ import Element
     exposing
         ( Element
         , column
-        , el
         , html
         , link
         , paragraph
         , row
         , text
         )
-import Element.Events exposing (onClick)
 import Element.Input
-import Html
 import Html.Attributes
 import MultiwayTree
     exposing

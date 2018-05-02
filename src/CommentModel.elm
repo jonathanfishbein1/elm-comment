@@ -27,15 +27,16 @@ module CommentModel
 -}
 
 import AutoExpand
-import Internal.CommentModel
-    exposing
-        ( CommentId
-        , UserId
-        )
+import Internal.CommentModel exposing (CommentId)
 import MultiwayTree exposing (Tree)
 import MultiwayTreeZipper exposing (Zipper)
 
 
+commentOrLogin :
+    Bool
+    -> CommentId
+    -> { state : AutoExpand.State, textValue : String }
+    -> CommentMsg
 commentOrLogin isSignedIn parentCommentId state =
     if isSignedIn == True then
         TextInput (CommentIdModel parentCommentId) state

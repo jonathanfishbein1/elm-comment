@@ -4,41 +4,26 @@ import CommentModel
     exposing
         ( UserCommentModel
         , UserIdModel(UserIdModel)
-        , commentModelInit
         , commentZipperInit
         )
 import CommentView exposing (commentMainView)
 import Element
 import Expect
 import Fuzz
-    exposing
-        ( bool
-        )
-import Internal.CommentView
-    exposing
-        ( addCommentView
-        , commentProfileHtml
-        )
+import Internal.CommentView exposing (commentProfileHtml)
 import Test
     exposing
         ( Test
         , describe
-        , fuzz
         , test
         )
 import Test.Html.Query
     exposing
         ( count
-        , find
         , findAll
         , fromHtml
-        , has
         )
-import Test.Html.Selector
-    exposing
-        ( attribute
-        , tag
-        )
+import Test.Html.Selector exposing (tag)
 
 
 commenter : UserCommentModel

@@ -10,7 +10,6 @@ module CommentUpdate
 
 -}
 
-import AutoExpand
 import CommentModel
     exposing
         ( CommentIdModel(CommentIdModel)
@@ -89,7 +88,7 @@ commentUpdate isSignedIn seed commentMsg zipper =
                 parentProtoMessage =
                     getParentComment zipper parentCommentIdModel
 
-                (CommentIdModel parentCommentId) =
+                (CommentIdModel _) =
                     parentCommentIdModel
             in
             case parentProtoMessage of
@@ -107,7 +106,7 @@ commentUpdate isSignedIn seed commentMsg zipper =
                 Nothing ->
                     ( zipper, seed ) ! []
 
-        CommentRouting userId ->
+        CommentRouting _ ->
             ( zipper, seed ) ! []
 
         CommentLogin ->

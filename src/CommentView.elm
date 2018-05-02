@@ -11,22 +11,14 @@ module CommentView
 
 import CommentModel
     exposing
-        ( CommentIdModel(CommentIdModel)
-        , CommentModel
-        , CommentMsg(ClickReplyButton, CommentRouting, GenerateCommentId)
+        ( CommentModel
+        , CommentMsg
         , UserCommentModel
-        , UserIdModel(UserIdModel)
         )
 import Element
     exposing
         ( Element
         , column
-        , el
-        , html
-        , link
-        , paragraph
-        , row
-        , text
         )
 import Internal.CommentView
     exposing
@@ -35,9 +27,7 @@ import Internal.CommentView
         )
 import MultiwayTree
     exposing
-        ( Forest
-        , Tree
-        , children
+        ( children
         , datum
         )
 import MultiwayTreeZipper exposing (Zipper)
@@ -49,10 +39,10 @@ import MultiwayTreeZipper exposing (Zipper)
 
 -}
 commentMainView : Bool -> UserCommentModel -> Maybe (Zipper CommentModel) -> Element CommentMsg
-commentMainView isSignedIn currentUser zipper =
+commentMainView isSignedIn currentUser zipperMaybe =
     column
         []
-        (case zipper of
+        (case zipperMaybe of
             Just zipper ->
                 let
                     treeCommentModel =

@@ -52,7 +52,7 @@ commentTests =
                 let
                     isErrorResult postTestMaybeZipper =
                         let
-                            ( newUuid, newSeed ) =
+                            ( newUuid, _ ) =
                                 step Uuid.uuidGenerator testSeed
 
                             findId =
@@ -61,7 +61,7 @@ commentTests =
 
                             foundId =
                                 case findId of
-                                    Just findId ->
+                                    Just _ ->
                                         True
 
                                     Nothing ->
