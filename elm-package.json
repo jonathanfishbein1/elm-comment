@@ -17,8 +17,8 @@
         "elm-lang/core": "5.1.1 <= v <= 5.1.1",
         "elm-lang/dom": "1.1.1 <= v <= 1.1.1",
         "elm-lang/html": "2.0.0 <= v <= 2.0.0",
-        "lucamug/elm-style-framework": "6.0.0 <= v < 7.0.0",
-        "mdgriffith/stylish-elephants": "5.0.1 <= v <= 5.0.1",
+        "lucamug/elm-style-framework": "6.0.0 <= v <= 6.0.0",
+        "mdgriffith/stylish-elephants": "6.0.2 <= v <= 6.0.2",
         "mgold/elm-random-pcg": "5.0.2 <= v <= 5.0.2",
         "ohanhi/autoexpand": "2.1.1 <= v <= 2.1.1",
         "tomjkidd/elm-multiway-tree-zipper": "1.10.2 <= v <= 1.10.2"
