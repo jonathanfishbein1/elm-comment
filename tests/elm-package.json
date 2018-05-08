@@ -19,7 +19,7 @@
         "mgold/elm-random-pcg": "5.0.2 <= v <= 5.0.2",
         "ohanhi/autoexpand": "2.1.1 <= v <= 2.1.1",
         "tomjkidd/elm-multiway-tree-zipper": "1.10.2 <= v <= 1.10.2",
-        "lucamug/elm-style-framework": "6.0.0 <= v <= 6.0.0"
+        "lucamug/elm-style-framework": "7.0.2 <= v <= 7.0.2"
     },
     "elm-version": "0.18.0 <= v < 0.19.0"
 }
