@@ -9,10 +9,10 @@
     "description": "Elm comments",
     "dependencies": {
         "elm": "^0.18.0",
-        "elm-test": "^0.18.3"
+        "elm-test": "^0.18.12"
     },
     "devDependencies": {
-        "elm-check-updates": "^1.2.2",
-        "elm-analyse": "^0.13.3"
+        "elm-analyse": "^0.14.2",
+        "elm-check-updates": "^1.2.2"
     }
 }
