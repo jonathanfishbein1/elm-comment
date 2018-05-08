@@ -140,6 +140,15 @@ commentTests =
           <|
             \testProtoMessage ->
                 let
+                    testCommentModel =
+                        CommentModel.CommentModel (CommentIdModel testProtoMessage) (UserCommentModel (UserIdModel "") "" "") "" False "" (AutoExpand.initState <| config False "")
+
+                    testCommentTree =
+                        MultiwayTree.Tree testCommentModel []
+
+                    testCommentZipper =
+                        Just ( testCommentTree, [] )
+
                     isErrorResult postTestMaybeZipper =
                         let
                             zipper =
@@ -159,7 +168,7 @@ commentTests =
                         in
                         zipper
                 in
-                commentUpdate True testSeed (ClearValue (CommentIdModel "")) commentZipperInit
+                commentUpdate True testSeed (ClearValue (CommentIdModel testProtoMessage)) testCommentZipper
                     |> Tuple.first
                     |> Tuple.first
                     |> isErrorResult

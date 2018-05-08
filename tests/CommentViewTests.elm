@@ -9,7 +9,6 @@ import CommentModel
 import CommentView exposing (commentMainView)
 import Element
 import Expect
-import Fuzz
 import Internal.CommentView exposing (commentProfileHtml)
 import Test
     exposing
