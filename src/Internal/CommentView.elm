@@ -28,7 +28,7 @@ import Element
         , text
         )
 import Framework.Button
-import Framework.Modifiers
+import Framework.Modifier
 import MultiwayTree
     exposing
         ( Forest
@@ -67,7 +67,7 @@ addCommentView isSignedIn commenter zipper parentCommentIdModel =
                     [ html <| AutoExpand.view (config isSignedIn parentCommentId) parentCommentModel.autoexpand parentCommentModel.protoMessage
                     , Framework.Button.button
                         (if isPostCommentButtonDisabled then
-                            [ Framework.Modifiers.Disabled ]
+                            [ Framework.Modifier.Disabled ]
                          else
                             []
                         )
